@@ -5,9 +5,8 @@
     <classes>
       <class name="com.practice.proj.TestSelenium">
         <methods>
-          <include name="setUp"/>
           <include name="closeMethod"/>
-          <include name="registrationSuccessful"/>
+          <include name="setUp"/>
           <include name="loginSuccessful"/>
         </methods>
       </class> <!-- com.practice.proj.TestSelenium -->

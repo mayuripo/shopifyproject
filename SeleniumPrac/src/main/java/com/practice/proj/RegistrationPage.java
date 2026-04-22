@@ -1,8 +1,9 @@
 package com.practice.proj;
 
 import java.io.File;
-import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.time.Duration;
+import java.util.Date;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.OutputType;
@@ -12,6 +13,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.io.FileHandler;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.annotations.Test;
 
 public class RegistrationPage {
 WebDriverWait wait;
@@ -22,9 +24,19 @@ WebDriver driver;
 		wait=new WebDriverWait(driver, Duration.ofSeconds(1000));
 	}
 
-	
+	public static void captureScreen(WebDriver driver, String screenshotName) throws Exception {
+	    String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+	    TakesScreenshot ts = (TakesScreenshot) driver;
+	    File source = ts.getScreenshotAs(OutputType.FILE);
+	    
+	    // Ensure the directory exists
+	    File directory = new File("./photo/");
+	    if (!directory.exists()) directory.mkdirs();
 
-	public void enterData(String firstname, String lastname, String email, String password) {
+	    File dst = new File("./photo/" + screenshotName + "_" + timeStamp + ".png");
+	    org.openqa.selenium.io.FileHandler.copy(source, dst);
+	}
+	public void enterData(String firstname, String lastname, String email, String password) throws Exception {
 		// TODO Auto-generated method stub
 		WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("customer[first_name]")));
 		element.sendKeys(firstname);
@@ -37,19 +49,9 @@ WebDriver driver;
 
 		element = driver.findElement(By.name("customer[password]"));
 		element.sendKeys(password);
-		TakesScreenshot scrShot = ((TakesScreenshot) driver);
-
-	    // 2. Call getScreenshotAs method to create image file
-	    File srcFile = scrShot.getScreenshotAs(OutputType.FILE);
-String path="./photo";
-	    // 3. Move image file to new destination
-	    File destFile = new File(path);
-	    try {
-	        FileHandler.copy(srcFile, destFile);
-	        System.out.println("Screenshot saved: " + destFile.getAbsolutePath());
-	    } catch (IOException e) {
-	        e.printStackTrace();
-	    }
+		
+	    captureScreen(driver, lastname);
+	   
 	}
 		
 

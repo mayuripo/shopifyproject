@@ -1,5 +1,7 @@
 package com.practice.proj;
 
+import java.io.IOException;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -27,7 +29,7 @@ public class TestSelenium {
 	    }
 
 	    @Test(priority = 1)
-	    public void registrationSuccessful() {
+	    public void registrationSuccessful() throws Exception {
 	        // Navigate to signup
 	        driver.findElement(By.linkText("Sign up")).click();
 	        page.enterData("Mayuri", "Powar", "mayuripowar1993@gmail.com", "123");
@@ -35,11 +37,11 @@ public class TestSelenium {
 	    }
 
 	    @Test(priority = 2)
-	    public void loginSuccessful() {
+	    public void loginSuccessful() throws IOException {
 	        // Since we are already on the site from the last test, 
 	        // just navigate to the login link
 	        driver.findElement(By.linkText("Log In")).click();
-	        login.enterCredentials("mayuripowar1993@gmail.com", "123");
+	        login.enterCredentials("mayuripowar1993@gmail.com", "123","PrimaryAccount");
 	        login.clickLogin();
 	    }
 
